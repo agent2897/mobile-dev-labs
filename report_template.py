@@ -84,7 +84,10 @@ cells = [[Image(os.path.join(shots, f), width=5*cm, height=9.74*cm), Paragraph(t
 rows = [cells[i:i+3] for i in range(0, len(cells), 3)]
 rows[-1] += [''] * (3 - len(rows[-1]))
 s.append(Table(rows, colWidths=[5.6*cm]*3, style=[('VALIGN', (0, 0), (-1, -1), 'TOP')]))
-s += [PageBreak(), Paragraph('Код програми', h)]
+GH = 'https://github.com/agent2897/mobile-dev-labs/tree/main/lab2-movies'
+s += [PageBreak(), Paragraph('Код програми', h),
+      Paragraph(f'Код програми розміщено на GitHub: <link href="{GH}" color="blue"><u>{GH}</u></link>', n),
+      Spacer(1, 6)]
 for p in ['App.js', 'screens/SearchScreen.js', 'screens/DetailsScreen.js', 'components/MovieRow.js',
           'api.js', 'mockData.js', 'package.json']:
     s += [Paragraph('<b>' + p + '</b>', ParagraphStyle('f', parent=n, firstLineIndent=0, fontSize=12)),
