@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CurrencyApp.ViewModels"
+             xmlns:m="clr-namespace:CurrencyApp.Models"
+             x:Class="CurrencyApp.Views.RatesPage"
+             x:DataType="vm:RatesViewModel"
+             BackgroundColor="#F4F2FA">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <SearchBar Text="{Binding Search}" Placeholder="Пошук: назва або код (USD)"
+                   Margin="8,8,8,0" BackgroundColor="White" />
+
+        <Label Grid.Row="1" Margin="18,8" TextColor="Gray" FontSize="13"
+               Text="{Binding Date, StringFormat='Офіційний курс НБУ на {0}'}" />
+
+        <RefreshView Grid.Row="2" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding Rates}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="30" Spacing="10">
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#512BD4" />
+                        <Label Text="{Binding Error}" IsVisible="{Binding HasError}" TextColor="#C62828"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Нічого не знайдено" IsVisible="{Binding IsEmpty}" TextColor="Gray"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:Rate">
+                        <Border Margin="10,4" Padding="14,10" BackgroundColor="White" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type vm:RatesViewModel}}, x:DataType=vm:RatesViewModel}"
+                                    CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Label Text="{Binding Flag}" FontSize="28" VerticalOptions="Center" />
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Cc}" FontAttributes="Bold" FontSize="16" TextColor="#222" />
+                                    <Label Text="{Binding Name}" FontSize="13" TextColor="Gray" LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="{Binding ValueText, StringFormat='{0} ₴'}"
+                                       FontSize="17" FontAttributes="Bold" TextColor="#512BD4" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

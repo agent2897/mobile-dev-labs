@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="CurrencyApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:CurrencyApp.Views"
+    Shell.BackgroundColor="#512BD4"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="#512BD4"
+    Shell.TabBarTitleColor="#512BD4"
+    Shell.TabBarUnselectedColor="Gray">
+
+    <TabBar>
+        <ShellContent Title="Курси" ContentTemplate="{DataTemplate views:RatesPage}" Route="rates">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="₴" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Конвертер" ContentTemplate="{DataTemplate views:ConverterPage}" Route="converter">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="⇄" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Обране" ContentTemplate="{DataTemplate views:FavoritesPage}" Route="favorites">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="★" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </TabBar>
+
+</Shell>

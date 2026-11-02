@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CurrencyApp.ViewModels"
+             xmlns:c="clr-namespace:CurrencyApp.Controls"
+             x:Class="CurrencyApp.Views.DetailsPage"
+             x:DataType="vm:DetailsViewModel"
+             Title="{Binding Rate.Cc}"
+             BackgroundColor="#F4F2FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <Border Padding="20" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label Text="{Binding Rate.Flag}" FontSize="48" HorizontalOptions="Center" />
+                    <Label Text="{Binding Rate.Name}" FontSize="16" TextColor="Gray" HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <Label HorizontalOptions="Center" FontSize="34" FontAttributes="Bold" TextColor="#222">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="1 " />
+                                <Span Text="{Binding Rate.Cc}" />
+                                <Span Text=" = " />
+                                <Span Text="{Binding Rate.ValueText}" TextColor="#512BD4" />
+                                <Span Text=" ₴" TextColor="#512BD4" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Text="{Binding Rate.ExchangeDate, StringFormat='Курс НБУ на {0}'}" FontSize="13"
+                           TextColor="Gray" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="{Binding FavoriteText}" Command="{Binding ToggleFavoriteCommand}"
+                    BackgroundColor="#EDE7F6" TextColor="#512BD4" CornerRadius="20" />
+
+            <Border Padding="12" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Динаміка курсу" FontSize="17" FontAttributes="Bold" TextColor="#222" />
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="7 днів" Command="{Binding PeriodCommand}" CommandParameter="7"
+                                BackgroundColor="#EDE7F6" TextColor="#512BD4" CornerRadius="16" Padding="14,4" />
+                        <Button Text="30 днів" Command="{Binding PeriodCommand}" CommandParameter="30"
+                                BackgroundColor="#EDE7F6" TextColor="#512BD4" CornerRadius="16" Padding="14,4" />
+                        <Button Text="90 днів" Command="{Binding PeriodCommand}" CommandParameter="90"
+                                BackgroundColor="#EDE7F6" TextColor="#512BD4" CornerRadius="16" Padding="14,4" />
+                    </HorizontalStackLayout>
+                    <Grid HeightRequest="220">
+                        <c:RateChart Points="{Binding History}" />
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#512BD4"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="{Binding Summary}" TextColor="{Binding SummaryColor}" FontSize="13" />
+                    <Label Text="{Binding Error}" IsVisible="{Binding HasError}" TextColor="#C62828" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

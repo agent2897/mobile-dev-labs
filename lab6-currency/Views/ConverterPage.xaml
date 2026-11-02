@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CurrencyApp.ViewModels"
+             xmlns:m="clr-namespace:CurrencyApp.Models"
+             x:Class="CurrencyApp.Views.ConverterPage"
+             x:DataType="vm:ConverterViewModel"
+             BackgroundColor="#F4F2FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#512BD4" />
+            <Label Text="{Binding Error}" IsVisible="{Binding HasError}" TextColor="#C62828" />
+
+            <Border Padding="16" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Сума" TextColor="Gray" />
+                    <Entry Text="{Binding Amount}" Keyboard="Numeric" FontSize="28" FontAttributes="Bold" />
+
+                    <Label Text="З валюти" TextColor="Gray" Margin="0,8,0,0" />
+                    <Picker ItemsSource="{Binding Currencies}" SelectedItem="{Binding From}"
+                            ItemDisplayBinding="{Binding Cc, x:DataType=m:Rate}" FontSize="18" Title="Оберіть валюту" />
+
+                    <Button Text="⇅  Поміняти місцями" Command="{Binding SwapCommand}"
+                            BackgroundColor="#EDE7F6" TextColor="#512BD4" CornerRadius="20" HorizontalOptions="Center" />
+
+                    <Label Text="У валюту" TextColor="Gray" />
+                    <Picker ItemsSource="{Binding Currencies}" SelectedItem="{Binding To}"
+                            ItemDisplayBinding="{Binding Cc, x:DataType=m:Rate}" FontSize="18" Title="Оберіть валюту" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="20" BackgroundColor="#512BD4" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Результат" TextColor="#D1C4E9" />
+                    <Label Text="{Binding Result}" TextColor="White" FontSize="32" FontAttributes="Bold" />
+                    <Label Text="{Binding RateInfo}" TextColor="#D1C4E9" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Розрахунок за офіційним курсом НБУ через гривню." TextColor="Gray" FontSize="12" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
