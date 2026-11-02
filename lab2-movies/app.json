@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Movie Browser",
+    "slug": "movie-browser",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}
