@@ -26,82 +26,88 @@ def src(p):
 
 s = []
 s += [Paragraph('МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ', c), Spacer(1, 5*cm),
-      Paragraph('<b>ЗВІТ</b>', c), Paragraph('з лабораторної роботи №3', c),
+      Paragraph('<b>ЗВІТ</b>', c), Paragraph('з лабораторної роботи №4', c),
       Paragraph('з дисципліни «Розробка програмних додатків для мобільних пристроїв»', c),
-      Paragraph('на тему: «Саморобний додаток. Застосунок прогнозу погоди»', c), Spacer(1, 4*cm),
+      Paragraph('на тему: «Саморобний додаток на Flutter. Трекер витрат»', c), Spacer(1, 4*cm),
       Paragraph('Виконав: студент групи 401', r), Paragraph('Миленко Юрій', r),
       Spacer(1, 5*cm), Paragraph('2026', c), PageBreak()]
 
 s += [Paragraph('Мета роботи', h),
-      Paragraph('Реалізувати проєкт на JavaScript та React Native з нуля; побудувати робочий процес '
-                'розробки мобільного додатка; створити власні інтерфейси; навчитися керувати глобальним '
-                'станом додатка за допомогою Redux та поєднувати стековий навігатор із навігатором по вкладках.', n),
+      Paragraph('Ознайомитися з програмним каркасом Flutter та мовою Dart; навчитися будувати інтерфейс '
+                'з віджетів Material 3, керувати станом додатка, організовувати навігацію між екранами, '
+                'працювати з формами та локальним сховищем даних; реалізувати власний додаток з нуля.', n),
       Paragraph('Завдання', h),
-      Paragraph('Розробити власний мобільний додаток. Обрано тему — застосунок прогнозу погоди з пошуком '
-                'міст, обраними містами та налаштуваннями. Вимоги:', n)]
-for t in ['використання Redux для керування станом;',
-          'щонайменше один мережевий виклик;',
-          'щонайменше один стековий навігатор;',
-          'щонайменше один навігатор по вкладках;',
-          'масштаб не менший, ніж у попередніх проєктах.']:
+      Paragraph('Реалізувати власний мобільний додаток з використанням Flutter з нуля. Обрано тему — '
+                'трекер особистих витрат. Вимоги та функціональність:', n)]
+for t in ['проєкт створено на Flutter (Dart) з нуля;',
+          'масштаб не менший, ніж у попередніх проєктах;',
+          'додавання витрат через форму з валідацією, вибір категорії та дати;',
+          'список витрат, згрупований за днями, з видаленням свайпом і скасуванням;',
+          'місячний бюджет та статистика за категоріями з діаграмою;',
+          'збереження даних між запусками додатка.']:
     s.append(Paragraph('• ' + t, li))
 
 s += [Paragraph('Хід виконання роботи', h),
-      Paragraph('1. Створено Expo-проєкт і встановлено залежності: @reduxjs/toolkit та react-redux '
-                '(керування станом), @react-navigation/native, @react-navigation/stack, '
-                '@react-navigation/bottom-tabs (навігація), @expo/vector-icons (іконки), prop-types. '
-                'Як джерело даних обрано відкритий API Open-Meteo, який не потребує ключа.', n),
-      Paragraph('2. Структура проєкту: App.js — Provider зі сховищем Redux, навігатор по вкладках '
-                '(«Пошук», «Обране», «Налаштування») та два стекові навігатори; api.js — мережеві виклики; '
-                'store/ — сховище та слайси; screens/ — екрани SearchScreen, WeatherScreen, FavoritesScreen, '
-                'SettingsScreen; components/CityRow.js — рядок міста; weatherCodes.js — розшифровка кодів '
-                'погоди WMO в текст та іконку.', n),
-      Paragraph('3. Мережеві виклики (api.js): searchCities(name) звертається до Geocoding API Open-Meteo '
-                'та повертає список міст з координатами; getForecast(city, unit) отримує поточну погоду '
-                '(температура, відчуття, вологість, вітер, код погоди) і прогноз на 7 днів у вибраних '
-                'одиницях температури.', n),
-      Paragraph('4. Redux-сховище створено функцією configureStore і складається з чотирьох слайсів: '
-                'cities — результати пошуку міст (асинхронний thunk findCities зі станами loading/done/error); '
-                'forecast — прогнози, кешовані за id міста (thunk loadForecast, який бере одиниці з '
-                'getState().settings); favorites — список обраних міст (дії toggleFavorite, clearFavorites); '
-                'settings — одиниці температури (дія setUnit). Компоненти отримують стан через useSelector '
-                'і змінюють його через useDispatch.', n),
-      Paragraph('5. Навігація: нижній навігатор по вкладках містить три вкладки. Вкладки «Пошук» та '
-                '«Обране» є стековими навігаторами: зі списку міст виконується перехід '
-                'navigation.navigate(\'Weather\', { city }) на екран прогнозу. На екрані прогнозу через '
-                'navigation.setOptions у заголовок додано назву міста та кнопку-зірку для додавання в обране. '
-                'Обрані міста одразу з’являються на вкладці «Обране», оскільки стан спільний для всього '
-                'додатка. Зміна одиниць у налаштуваннях автоматично перезавантажує прогноз.', n),
+      Paragraph('1. Встановлено Flutter SDK, проєкт створено командою '
+                '<font name="Mono">flutter create</font>. Додано пакети shared_preferences (локальне '
+                'сховище «ключ–значення»), intl (форматування дат і грошових сум українською) та '
+                'flutter_localizations (локалізація стандартних віджетів, зокрема календаря). Запуск — '
+                '<font name="Mono">flutter run</font> на емуляторі або телефоні.', n),
+      Paragraph('2. Структура проєкту (каталог lib): main.dart — точка входу, тема Material 3 та головний '
+                'екран з нижньою навігацією; models/expense.dart — модель Expense та перелік Category '
+                '(enum з назвою, іконкою і кольором); state/expense_store.dart — стан додатка; screens/ — '
+                'екрани «Витрати», «Нова витрата», «Статистика», «Налаштування»; widgets/ — віджети '
+                'ExpenseTile, BudgetCard та CategoryBarChart.', n),
+      Paragraph('3. Керування станом: клас ExpenseStore наслідує ChangeNotifier і містить список витрат '
+                'та бюджет, методи add, remove, setBudget, clear та обчислювані властивості monthTotal '
+                'і byCategory. Після кожної зміни викликається notifyListeners() і дані серіалізуються в JSON '
+                'та зберігаються в SharedPreferences, а під час запуску — завантажуються. Сховище передається '
+                'по дереву віджетів через InheritedNotifier (StoreScope), тому всі вкладки автоматично '
+                'перебудовуються при зміні даних.', n),
+      Paragraph('4. Навігація: HomeShell містить NavigationBar з трьома вкладками, сторінки зберігаються '
+                'в IndexedStack. Кнопка «+» відкриває екран нової витрати через Navigator.push, а введена '
+                'витрата повертається як результат Navigator.pop. Форма використовує Form і TextFormField '
+                'з валідаторами (порожня назва, недодатна сума), ChoiceChip для вибору категорії та '
+                'showDatePicker для вибору дати.', n),
+      Paragraph('5. Список витрат групується за днями; кожен елемент обгорнуто в Dismissible — свайп '
+                'вліво видаляє витрату, а SnackBar дає змогу скасувати видалення. Картка BudgetCard показує '
+                'суму за місяць і залишок бюджету з індикатором прогресу. На вкладці «Статистика» '
+                'стовпчикову діаграму намальовано власноруч через CustomPainter, нижче — частка кожної '
+                'категорії. Бюджет змінюється в діалозі AlertDialog. Логіку моделі та сховища покрито '
+                'модульними тестами (flutter test).', n),
       PageBreak(), Paragraph('Результати роботи', h)]
-caps = [('1_search.png', 'Рис. 1 — Вкладка «Пошук»'),
-        ('2_results.png', 'Рис. 2 — Результати пошуку міста «Київ»'),
-        ('3_weather.png', 'Рис. 3 — Поточна погода і прогноз на 7 днів'),
-        ('5_favorites.png', 'Рис. 4 — Вкладка «Обране»'),
-        ('6_settings.png', 'Рис. 5 — Налаштування: вибрано °F'),
-        ('7_weather_f.png', 'Рис. 6 — Прогноз у градусах Фаренгейта')]
+caps = [('1_empty.png', 'Рис. 1 — Перший запуск, витрат немає'),
+        ('2_list.png', 'Рис. 2 — Список витрат і бюджет'),
+        ('3_validation.png', 'Рис. 3 — Валідація форми'),
+        ('4_add.png', 'Рис. 4 — Додавання нової витрати'),
+        ('5_list_added.png', 'Рис. 5 — Витрату додано до списку'),
+        ('6_stats.png', 'Рис. 6 — Статистика за категоріями'),
+        ('7_budget.png', 'Рис. 7 — Зміна місячного бюджету')]
 cap = ParagraphStyle('cap', parent=c, fontSize=11, leading=13)
 cells = [[Image(os.path.join(shots, f), width=5*cm, height=9.74*cm), Paragraph(t, cap)] for f, t in caps]
 rows = [cells[i:i+3] for i in range(0, len(cells), 3)]
 rows[-1] += [''] * (3 - len(rows[-1]))
 s.append(Table(rows, colWidths=[5.6*cm]*3, style=[('VALIGN', (0, 0), (-1, -1), 'TOP')]))
-GH = 'https://github.com/agent2897/mobile-dev-labs/tree/main/lab3-weather'
+GH = 'https://github.com/agent2897/mobile-dev-labs/tree/main/lab4-expenses'
 s += [PageBreak(), Paragraph('Код програми', h),
       Paragraph(f'Код програми розміщено на GitHub: <link href="{GH}" color="blue"><u>{GH}</u></link>', n),
       Spacer(1, 6)]
-for p in ['App.js', 'api.js', 'store/index.js', 'store/citiesSlice.js', 'store/forecastSlice.js',
-          'store/favoritesSlice.js', 'store/settingsSlice.js', 'screens/SearchScreen.js',
-          'screens/WeatherScreen.js', 'screens/FavoritesScreen.js', 'screens/SettingsScreen.js',
-          'components/CityRow.js', 'weatherCodes.js', 'package.json']:
+for p in ['lib/main.dart', 'lib/models/expense.dart', 'lib/state/expense_store.dart',
+          'lib/screens/expenses_screen.dart', 'lib/screens/add_expense_screen.dart',
+          'lib/screens/stats_screen.dart', 'lib/screens/settings_screen.dart',
+          'lib/widgets/expense_tile.dart', 'lib/widgets/budget_card.dart', 'lib/widgets/bar_chart.dart',
+          'test/widget_test.dart']:
     s += [Paragraph('<b>' + p + '</b>', ParagraphStyle('f', parent=n, firstLineIndent=0, fontSize=12)),
           Preformatted(src(p), code), Spacer(1, 8)]
 
 s += [Paragraph('Висновки', h),
-      Paragraph('У ході лабораторної роботи з нуля розроблено власний мобільний додаток прогнозу погоди '
-                'на React Native з використанням Expo. Глобальний стан (результати пошуку, прогнози, обрані '
-                'міста, налаштування) зберігається в Redux; асинхронні мережеві запити до API Open-Meteo '
-                'виконуються через createAsyncThunk. Навігацію побудовано на поєднанні навігатора по вкладках '
-                'та стекових навігаторів. Отримано практичні навички проєктування архітектури додатка, роботи '
-                'з Redux Toolkit, react-redux, React Navigation та мережевими API.', n)]
+      Paragraph('У ході лабораторної роботи з нуля розроблено мобільний додаток «Трекер витрат» з '
+                'використанням програмного каркаса Flutter і мови Dart. Реалізовано додавання витрат через '
+                'форму з валідацією, список з групуванням за днями та видаленням свайпом, місячний бюджет, '
+                'статистику з власноруч намальованою діаграмою та збереження даних між запусками. Отримано '
+                'практичні навички побудови інтерфейсу з віджетів Material 3, керування станом через '
+                'ChangeNotifier та InheritedNotifier, навігації за допомогою Navigator і NavigationBar, '
+                'роботи з локальним сховищем, а також порівняно підходи Flutter і React Native.', n)]
 
 SimpleDocTemplate(out, pagesize=A4, leftMargin=2.5*cm, rightMargin=1.5*cm,
-                  topMargin=2*cm, bottomMargin=2*cm, title='Лабораторна робота 3').build(s)
+                  topMargin=2*cm, bottomMargin=2*cm, title='Лабораторна робота 4').build(s)
