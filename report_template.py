@@ -26,80 +26,82 @@ def src(p):
 
 s = []
 s += [Paragraph('МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ', c), Spacer(1, 5*cm),
-      Paragraph('<b>ЗВІТ</b>', c), Paragraph('з лабораторної роботи №2', c),
+      Paragraph('<b>ЗВІТ</b>', c), Paragraph('з лабораторної роботи №3', c),
       Paragraph('з дисципліни «Розробка програмних додатків для мобільних пристроїв»', c),
-      Paragraph('на тему: «Браузер фільмів»', c), Spacer(1, 4*cm),
+      Paragraph('на тему: «Саморобний додаток. Застосунок прогнозу погоди»', c), Spacer(1, 4*cm),
       Paragraph('Виконав: студент групи 401', r), Paragraph('Миленко Юрій', r),
       Spacer(1, 5*cm), Paragraph('2026', c), PageBreak()]
 
 s += [Paragraph('Мета роботи', h),
-      Paragraph('Навчитися організовувати навігацію між екранами мобільного додатка за допомогою '
-                'React Navigation (StackNavigator), отримувати дані з мережевого API, відображати великі '
-                'списки за допомогою FlatList з посторінковим довантаженням; розробити додаток для пошуку '
-                'фільмів у відкритій базі даних OMDb.', n),
+      Paragraph('Реалізувати проєкт на JavaScript та React Native з нуля; побудувати робочий процес '
+                'розробки мобільного додатка; створити власні інтерфейси; навчитися керувати глобальним '
+                'станом додатка за допомогою Redux та поєднувати стековий навігатор із навігатором по вкладках.', n),
       Paragraph('Завдання', h),
-      Paragraph('Створити браузер фільмів, який дозволяє шукати фільми в базі OMDb (omdbapi.com) і '
-                'переглядати додаткову інформацію про вибраний фільм. Вимоги:', n)]
-for t in ['використовувати лише бібліотеки expo, react, react-native, prop-types, react-navigation '
-          'та бібліотеку іконок;',
-          'наявність щонайменше одного StackNavigator;',
-          'екран пошуку, що дозволяє шукати фільми;',
-          'показ більше 10 результатів, якщо їх існує більше 10;',
-          'екран з додатковою інформацією про вибраний фільм.']:
+      Paragraph('Розробити власний мобільний додаток. Обрано тему — застосунок прогнозу погоди з пошуком '
+                'міст, обраними містами та налаштуваннями. Вимоги:', n)]
+for t in ['використання Redux для керування станом;',
+          'щонайменше один мережевий виклик;',
+          'щонайменше один стековий навігатор;',
+          'щонайменше один навігатор по вкладках;',
+          'масштаб не менший, ніж у попередніх проєктах.']:
     s.append(Paragraph('• ' + t, li))
 
 s += [Paragraph('Хід виконання роботи', h),
-      Paragraph('1. Створено Expo-проєкт та встановлено залежності: @react-navigation/native, '
-                '@react-navigation/stack (з необхідними для неї react-native-gesture-handler, '
-                'react-native-screens, react-native-safe-area-context), prop-types та @expo/vector-icons '
-                '(бібліотека іконок Ionicons).', n),
-      Paragraph('2. Структура проєкту: App.js — контейнер навігації та StackNavigator з двома екранами '
-                '(Search і Details); screens/SearchScreen.js — екран пошуку; screens/DetailsScreen.js — '
-                'екран детальної інформації; components/MovieRow.js — рядок списку результатів; '
-                'api.js — функції роботи з OMDb API; mockData.js — макетні дані.', n),
-      Paragraph('3. Модуль api.js містить функції searchMovies(query, page) та getMovie(id). Перша '
-                'звертається до OMDb з параметрами s (рядок пошуку) і page та повертає список результатів '
-                'і їх загальну кількість; друга отримує повну інформацію про фільм за параметром i (imdbID). '
-                'Якщо API-ключ не задано, функції працюють із макетними даними з mockData.js у тому ж '
-                'форматі, що й відповіді OMDb.', n),
-      Paragraph('4. На екрані пошуку пошук виконується автоматично під час введення (від 3 символів). '
-                'Результати виводяться у FlatList. OMDb повертає по 10 результатів на сторінку, тому '
-                'для показу понад 10 результатів використано подію onEndReached: при прокрутці до кінця '
-                'списку завантажується наступна сторінка і додається до вже показаних. Під час '
-                'завантаження відображається ActivityIndicator, а якщо нічого не знайдено — відповідне '
-                'повідомлення.', n),
-      Paragraph('5. Натискання на фільм викликає navigation.navigate(\'Details\', { id, title }). Екран '
-                'деталей отримує imdbID з route.params, завантажує дані в useEffect і показує постер, '
-                'рік, рейтинг IMDb, тривалість, жанр, режисера, акторів та опис. Назва фільму '
-                'відображається в заголовку, а кнопка «назад» StackNavigator повертає до результатів пошуку. '
-                'Для всіх компонентів задано PropTypes.', n),
+      Paragraph('1. Створено Expo-проєкт і встановлено залежності: @reduxjs/toolkit та react-redux '
+                '(керування станом), @react-navigation/native, @react-navigation/stack, '
+                '@react-navigation/bottom-tabs (навігація), @expo/vector-icons (іконки), prop-types. '
+                'Як джерело даних обрано відкритий API Open-Meteo, який не потребує ключа.', n),
+      Paragraph('2. Структура проєкту: App.js — Provider зі сховищем Redux, навігатор по вкладках '
+                '(«Пошук», «Обране», «Налаштування») та два стекові навігатори; api.js — мережеві виклики; '
+                'store/ — сховище та слайси; screens/ — екрани SearchScreen, WeatherScreen, FavoritesScreen, '
+                'SettingsScreen; components/CityRow.js — рядок міста; weatherCodes.js — розшифровка кодів '
+                'погоди WMO в текст та іконку.', n),
+      Paragraph('3. Мережеві виклики (api.js): searchCities(name) звертається до Geocoding API Open-Meteo '
+                'та повертає список міст з координатами; getForecast(city, unit) отримує поточну погоду '
+                '(температура, відчуття, вологість, вітер, код погоди) і прогноз на 7 днів у вибраних '
+                'одиницях температури.', n),
+      Paragraph('4. Redux-сховище створено функцією configureStore і складається з чотирьох слайсів: '
+                'cities — результати пошуку міст (асинхронний thunk findCities зі станами loading/done/error); '
+                'forecast — прогнози, кешовані за id міста (thunk loadForecast, який бере одиниці з '
+                'getState().settings); favorites — список обраних міст (дії toggleFavorite, clearFavorites); '
+                'settings — одиниці температури (дія setUnit). Компоненти отримують стан через useSelector '
+                'і змінюють його через useDispatch.', n),
+      Paragraph('5. Навігація: нижній навігатор по вкладках містить три вкладки. Вкладки «Пошук» та '
+                '«Обране» є стековими навігаторами: зі списку міст виконується перехід '
+                'navigation.navigate(\'Weather\', { city }) на екран прогнозу. На екрані прогнозу через '
+                'navigation.setOptions у заголовок додано назву міста та кнопку-зірку для додавання в обране. '
+                'Обрані міста одразу з’являються на вкладці «Обране», оскільки стан спільний для всього '
+                'додатка. Зміна одиниць у налаштуваннях автоматично перезавантажує прогноз.', n),
       PageBreak(), Paragraph('Результати роботи', h)]
-caps = [('1_search.png', 'Рис. 1 — Екран пошуку'),
-        ('2_results.png', 'Рис. 2 — Результати пошуку «star» (перші 10)'),
-        ('3_more.png', 'Рис. 3 — Довантажено понад 10 результатів (13)'),
-        ('4_details.png', 'Рис. 4 — Екран детальної інформації про фільм'),
-        ('5_empty.png', 'Рис. 5 — Пошук без результатів')]
+caps = [('1_search.png', 'Рис. 1 — Вкладка «Пошук»'),
+        ('2_results.png', 'Рис. 2 — Результати пошуку міста «Київ»'),
+        ('3_weather.png', 'Рис. 3 — Поточна погода і прогноз на 7 днів'),
+        ('5_favorites.png', 'Рис. 4 — Вкладка «Обране»'),
+        ('6_settings.png', 'Рис. 5 — Налаштування: вибрано °F'),
+        ('7_weather_f.png', 'Рис. 6 — Прогноз у градусах Фаренгейта')]
 cap = ParagraphStyle('cap', parent=c, fontSize=11, leading=13)
 cells = [[Image(os.path.join(shots, f), width=5*cm, height=9.74*cm), Paragraph(t, cap)] for f, t in caps]
 rows = [cells[i:i+3] for i in range(0, len(cells), 3)]
 rows[-1] += [''] * (3 - len(rows[-1]))
 s.append(Table(rows, colWidths=[5.6*cm]*3, style=[('VALIGN', (0, 0), (-1, -1), 'TOP')]))
-GH = 'https://github.com/agent2897/mobile-dev-labs/tree/main/lab2-movies'
+GH = 'https://github.com/agent2897/mobile-dev-labs/tree/main/lab3-weather'
 s += [PageBreak(), Paragraph('Код програми', h),
       Paragraph(f'Код програми розміщено на GitHub: <link href="{GH}" color="blue"><u>{GH}</u></link>', n),
       Spacer(1, 6)]
-for p in ['App.js', 'screens/SearchScreen.js', 'screens/DetailsScreen.js', 'components/MovieRow.js',
-          'api.js', 'mockData.js', 'package.json']:
+for p in ['App.js', 'api.js', 'store/index.js', 'store/citiesSlice.js', 'store/forecastSlice.js',
+          'store/favoritesSlice.js', 'store/settingsSlice.js', 'screens/SearchScreen.js',
+          'screens/WeatherScreen.js', 'screens/FavoritesScreen.js', 'screens/SettingsScreen.js',
+          'components/CityRow.js', 'weatherCodes.js', 'package.json']:
     s += [Paragraph('<b>' + p + '</b>', ParagraphStyle('f', parent=n, firstLineIndent=0, fontSize=12)),
           Preformatted(src(p), code), Spacer(1, 8)]
 
 s += [Paragraph('Висновки', h),
-      Paragraph('У ході лабораторної роботи було розроблено мобільний додаток «Браузер фільмів» на '
-                'React Native з використанням Expo. Реалізовано навігацію між екранами за допомогою '
-                'StackNavigator з бібліотеки React Navigation, екран пошуку фільмів з посторінковим '
-                'довантаженням результатів (показ понад 10 результатів) та екран з детальною інформацією '
-                'про фільм. Отримано практичні навички роботи з мережевими запитами (fetch, async/await), '
-                'компонентом FlatList, передачею параметрів між екранами, бібліотекою іконок та PropTypes.', n)]
+      Paragraph('У ході лабораторної роботи з нуля розроблено власний мобільний додаток прогнозу погоди '
+                'на React Native з використанням Expo. Глобальний стан (результати пошуку, прогнози, обрані '
+                'міста, налаштування) зберігається в Redux; асинхронні мережеві запити до API Open-Meteo '
+                'виконуються через createAsyncThunk. Навігацію побудовано на поєднанні навігатора по вкладках '
+                'та стекових навігаторів. Отримано практичні навички проєктування архітектури додатка, роботи '
+                'з Redux Toolkit, react-redux, React Navigation та мережевими API.', n)]
 
 SimpleDocTemplate(out, pagesize=A4, leftMargin=2.5*cm, rightMargin=1.5*cm,
-                  topMargin=2*cm, bottomMargin=2*cm, title='Лабораторна робота 2').build(s)
+                  topMargin=2*cm, bottomMargin=2*cm, title='Лабораторна робота 3').build(s)
